@@ -32,13 +32,15 @@ packer_bootstrap(function(use)
         requires = { "neovim/nvim-lspconfig" },
         after = "coq_nvim",
         config = function()
-            map("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()     <cr>")
-            map("n", "<leader>li", "<cmd>lua vim.lsp.buf.implementation() <cr>")
-            map("n", "<leader>lR", "<cmd>lua vim.lsp.buf.references()     <cr>")
-            map("n", "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()    <cr>")
-            map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()     <cr>")
-            map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()         <cr>")
-            map("n", "K",          "<cmd>lua vim.lsp.buf.hover()          <cr>")
+            map("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()                   <cr>")
+            map("n", "<leader>li", "<cmd>lua vim.lsp.buf.implementation()               <cr>")
+            map("n", "<leader>lR", "<cmd>lua vim.lsp.buf.references()                   <cr>")
+            map("n", "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()                  <cr>")
+            map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()                   <cr>")
+            map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()                       <cr>")
+            map("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()                  <cr>")
+            map("n", "<leader>ls", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics() <cr>")
+            map("n", "K",          "<cmd>lua vim.lsp.buf.hover()                        <cr>")
 
             require("nvim-lsp-installer").settings({
                 ui = {
@@ -57,7 +59,14 @@ packer_bootstrap(function(use)
 
             lsp_installer.on_server_ready(function (server)
                 server:setup(opts)
-            end)
+            end) 
+
+            -- Disable in-line errors
+            vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+                vim.lsp.diagnostic.on_publish_diagnostics, {
+                    virtual_text = false
+                }
+            )
         end
     }
 
