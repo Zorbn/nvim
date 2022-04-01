@@ -153,5 +153,11 @@ packer_bootstrap(function(use)
         end
     }
 
-    use "Th3Whit3Wolf/one-nvim"
+    use {
+        "rose-pine/neovim",
+        as = "rose-pine",
+        tag = "v1.*"
+    }
+
+    -- use "Th3Whit3Wolf/one-nvim"
 end)

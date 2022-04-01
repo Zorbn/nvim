@@ -3,6 +3,7 @@ require("packages")
 
 ---- Indentation
 set_tab_width(4, true)
+vim.o.signcolumn = "number"
 
 ---- Lines
 vim.o.number         = true
@@ -10,9 +11,9 @@ vim.o.relativenumber = true
 
 ---- Themeing
 remove_excess_text()
-vim.opt.termguicolors = true
-vim.o.background      = "dark"
-set_colorscheme("one-nvim")
+vim.o.termguicolors = true
+vim.o.background    = "light"
+set_colorscheme("rose-pine")
 
 -- Windows
 vim.opt.splitright = true -- Prevents nvim-tree from opening files to the left
