@@ -1,7 +1,3 @@
--- TODO:
--- Replace coq_nvim (it keeps resizing the cmdline when loading,
--- Finish setting up mason features (formatting, linting).
-
 require("util")
 require("plugins")
 
@@ -35,14 +31,22 @@ vim.opt.splitright = true
 vim.g.mapleader = " "
 map("n", "<space>", "<nop>", { noremap = true, silent = true })
 
--- Escape terminal easier (it's Ctrl-\ because \ is the prefix for escape characters)
+-- Escape terminal easier (it's Ctrl-\ because \ is the prefix for escape characters).
 map("t", "<C-\\>", "<C-\\><C-n>", { noremap = true })
 
--- Highlight trailing whitespace
+-- CD to directory of current file.
+function cd_here()
+    local path = vim.fn.expand("%:p:h")
+    vim.cmd("cd " .. path)
+end
+
+map("n", "<leader>cd", '<cmd>lua cd_here()<cr>', { noremap = true })
+
+-- Highlight trailing whitespace.
 vim.opt.list = true
 vim.opt.listchars = vim.opt.listchars + "trail:·"
 
--- File type dependent indentation
+-- File type dependent indentation.
 function real_tabs()
     vim.opt_local.expandtab = false
 end
@@ -64,6 +68,6 @@ add_file_callback("go", real_tabs)
 add_file_callback("make", real_tabs)
 add_file_callback("ruby", function() space_tabs(2) end)
 
--- Match terminal background color regardless of colorscheme
+-- Match terminal background color regardless of colorscheme.
 vim.highlight.create("Normal", { guibg=0 }, false)
 vim.highlight.create("StatusLine", { guibg=0 }, false)

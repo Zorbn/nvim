@@ -35,37 +35,44 @@ return require("packer").startup(function(use)
         end
     }
 
-
     use {
-        "ms-jpq/coq.artifacts",
-        branch = "artifacts",
-    }
-
-    use {
-        "ms-jpq/coq_nvim",
-        branch = "coq",
-        requires = "coq.artifacts",
-        config = [[require("config.cmp")]],
+        {
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp",
+        },
+        {
+            "hrsh7th/nvim-cmp",
+            config = "require('config.cmp')",
+        },
     }
 
     use {
         {
             "williamboman/mason.nvim",
-            config = [[require("config.mason")]],
+            after = "nvim-cmp",
+            config = "require('config.mason')",
         },
         {
-            "williamboman/mason-lspconfig.nvim",
             "neovim/nvim-lspconfig",
-            after = { "mason", "coq_nvim" },
-            config = [[require("config.lsp")]],
+            requires = {
+                "williamboman/mason-lspconfig.nvim"
+            },
+            after = "mason.nvim",
+            config = "require('config.lsp')",
         },
         {
             "mfussenegger/nvim-dap",
-            config = [[require("config.dap")]],
+            config = "require('config.dap')",
         },
         {
             "mfussenegger/nvim-lint",
-            config = [[require("config.lint")]],
+            config = "require('config.lint')",
+        },
+        {
+            "mhartington/formatter.nvim",
+            config = "require('config.fmt')",
         },
     }
 
