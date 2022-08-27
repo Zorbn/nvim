@@ -35,10 +35,6 @@ return require("packer").startup(function(use)
         end
     }
 
-    use {
-        "ms-jpq/coq_nvim",
-        branch = "coq",
-    }
 
     use {
         "ms-jpq/coq.artifacts",
@@ -46,13 +42,33 @@ return require("packer").startup(function(use)
     }
 
     use {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig",
+        "ms-jpq/coq_nvim",
+        branch = "coq",
+        requires = "coq.artifacts",
+        config = [[require("config.cmp")]],
     }
 
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
+    use {
+        {
+            "williamboman/mason.nvim",
+            config = [[require("config.mason")]],
+        },
+        {
+            "williamboman/mason-lspconfig.nvim",
+            "neovim/nvim-lspconfig",
+            after = { "mason", "coq_nvim" },
+            config = [[require("config.lsp")]],
+        },
+        {
+            "mfussenegger/nvim-dap",
+            config = [[require("config.dap")]],
+        },
+        {
+            "mfussenegger/nvim-lint",
+            config = [[require("config.lint")]],
+        },
+    }
+
     if packer_bootstrap then
         require("packer").sync()
     end

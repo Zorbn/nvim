@@ -1,3 +1,8 @@
+-- TODO:
+-- Replace coq_nvim (it keeps resizing the cmdline when loading,
+-- Finish setting up mason features (formatting, linting).
+
+require("util")
 require("plugins")
 
 vim.opt.background = "dark"
@@ -27,11 +32,11 @@ vim.opt.equalalways = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
-map = vim.api.nvim_set_keymap
+vim.g.mapleader = " "
+map("n", "<space>", "<nop>", { noremap = true, silent = true })
 
 -- Escape terminal easier (it's Ctrl-\ because \ is the prefix for escape characters)
 map("t", "<C-\\>", "<C-\\><C-n>", { noremap = true })
-
 
 -- Highlight trailing whitespace
 vim.opt.list = true
@@ -62,26 +67,3 @@ add_file_callback("ruby", function() space_tabs(2) end)
 -- Match terminal background color regardless of colorscheme
 vim.highlight.create("Normal", { guibg=0 }, false)
 vim.highlight.create("StatusLine", { guibg=0 }, false)
-
--- Coq
-vim.g.coq_settings = {
-    ["auto_start"] = "shut-up",
-    ["display.pum.fast_close"] = false,
-    ["display.icons.mode"] = "none",
-}
-
-local coq = require("coq")
-
--- Mason
-require("mason").setup()
-local mason_lsp = require("mason-lspconfig")
-mason_lsp.setup()
-
-local lspconfig = require("lspconfig")
-local client_capabilities = vim.lsp.protocol.make_client_capabilities()
-
-mason_lsp.setup_handlers({
-    function(server)
-        lspconfig[server].setup(coq.lsp_ensure_capabilities(client_capabilities))
-    end
-})
