@@ -1,7 +1,10 @@
 require("plugins")
 
+vim.opt.background = "dark"
 vim.opt.termguicolors = true
 vim.opt.guifont = "Iosevka:h13"
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 vim.opt.expandtab = true
 vim.opt.mouse = "a"
@@ -64,6 +67,7 @@ vim.highlight.create("StatusLine", { guibg=0 }, false)
 vim.g.coq_settings = {
     ["auto_start"] = "shut-up",
     ["display.pum.fast_close"] = false,
+    ["display.icons.mode"] = "none",
 }
 
 local coq = require("coq")
