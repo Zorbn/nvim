@@ -9,30 +9,13 @@ return require("packer").startup(function(use)
 
     use {
         "ellisonleao/gruvbox.nvim",
-        config = function()
-            require("gruvbox").setup({
-                contrast = "",
-            })
-
-            vim.cmd("colorscheme gruvbox")
-        end
+        config = "require('config.theme')",
     }
 
     use {
-        "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", config = function()
-            require("nvim-treesitter.configs").setup {
-                ensure_installed = {
-                    "c", "lua", "javascript",
-                    "typescript", "c_sharp",
-                    "go", "rust", "java",
-                    "kotlin", "python", "cpp",
-                },
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false,
-                }
-            }
-        end
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+        config = "require('config.treesitter')",
     }
 
     use {
