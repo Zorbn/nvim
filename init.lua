@@ -3,7 +3,7 @@ require("plugins")
 
 vim.opt.background = "dark"
 vim.opt.termguicolors = true
-vim.opt.guifont = "Iosevka:h13"
+vim.opt.guifont = "Fira Code:h12"
 vim.opt.number = true
 vim.opt.relativenumber = true
 
@@ -33,6 +33,9 @@ map("n", "<space>", "<nop>", { noremap = true, silent = true })
 
 -- Escape terminal easier (it's Ctrl-\ because \ is the prefix for escape characters).
 map("t", "<C-\\>", "<C-\\><C-n>", { noremap = true })
+
+-- Clear search result higlights easier.
+map("n", "<leader>n", "<cmd>noh<cr>", { noremap = true})
 
 -- CD to directory of current file.
 function cd_here()
