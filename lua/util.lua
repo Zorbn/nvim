@@ -1,0 +1,1 @@
+map = vim.keymap.set

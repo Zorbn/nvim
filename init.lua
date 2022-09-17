@@ -1,7 +1,11 @@
+require("util")
 require("plugins")
 
+vim.opt.background = "dark"
 vim.opt.termguicolors = true
-vim.opt.guifont = "Iosevka:h13"
+vim.opt.guifont = "DejaVu Sans Mono:h10"
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 vim.opt.expandtab = true
 vim.opt.mouse = "a"
@@ -24,17 +28,28 @@ vim.opt.equalalways = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
-map = vim.api.nvim_set_keymap
+vim.g.mapleader = " "
+map("n", "<space>", "<nop>", { noremap = true, silent = true })
 
--- Escape terminal easier (it's Ctrl-\ because \ is the prefix for escape characters)
+-- Escape terminal easier (it's Ctrl-\ because \ is the prefix for escape characters).
 map("t", "<C-\\>", "<C-\\><C-n>", { noremap = true })
 
+-- Clear search result higlights easier.
+map("n", "<leader>n", "<cmd>noh<cr>", { noremap = true})
 
--- Highlight trailing whitespace
+-- CD to directory of current file.
+function cd_here()
+    local path = vim.fn.expand("%:p:h")
+    vim.cmd("cd " .. path)
+end
+
+map("n", "<leader>cd", '<cmd>lua cd_here()<cr>', { noremap = true })
+
+-- Highlight trailing whitespace.
 vim.opt.list = true
 vim.opt.listchars = vim.opt.listchars + "trail:·"
 
--- File type dependent indentation
+-- File type dependent indentation.
 function real_tabs()
     vim.opt_local.expandtab = false
 end
@@ -56,28 +71,6 @@ add_file_callback("go", real_tabs)
 add_file_callback("make", real_tabs)
 add_file_callback("ruby", function() space_tabs(2) end)
 
--- Match terminal background color regardless of colorscheme
+-- Match terminal background color regardless of colorscheme.
 vim.highlight.create("Normal", { guibg=0 }, false)
 vim.highlight.create("StatusLine", { guibg=0 }, false)
-
--- Coq
-vim.g.coq_settings = {
-    ["auto_start"] = "shut-up",
-    ["display.pum.fast_close"] = false,
-}
-
-local coq = require("coq")
-
--- Mason
-require("mason").setup()
-local mason_lsp = require("mason-lspconfig")
-mason_lsp.setup()
-
-local lspconfig = require("lspconfig")
-local client_capabilities = vim.lsp.protocol.make_client_capabilities()
-
-mason_lsp.setup_handlers({
-    function(server)
-        lspconfig[server].setup(coq.lsp_ensure_capabilities(client_capabilities))
-    end
-})

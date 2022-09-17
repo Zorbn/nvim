@@ -8,51 +8,58 @@ return require("packer").startup(function(use)
     use "wbthomason/packer.nvim"
 
     use {
-        "ellisonleao/gruvbox.nvim",
-        config = function()
-            require("gruvbox").setup({
-                contrast = "",
-            })
-
-            vim.cmd("colorscheme gruvbox")
-        end
+        -- "ellisonleao/gruvbox.nvim",
+        "navarasu/onedark.nvim",
+        config = "require('config.theme')",
     }
 
     use {
-        "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", config = function()
-            require("nvim-treesitter.configs").setup {
-                ensure_installed = {
-                    "c", "lua", "javascript",
-                    "typescript", "c_sharp",
-                    "go", "rust", "java",
-                    "kotlin", "python", "cpp",
-                },
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false,
-                }
-            }
-        end
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+        config = "require('config.treesitter')",
     }
 
     use {
-        "ms-jpq/coq_nvim",
-        branch = "coq",
+        {
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp",
+        },
+        {
+            "hrsh7th/nvim-cmp",
+            config = "require('config.cmp')",
+        },
     }
 
     use {
-        "ms-jpq/coq.artifacts",
-        branch = "artifacts",
+        {
+            "williamboman/mason.nvim",
+            after = "nvim-cmp",
+            config = "require('config.mason')",
+        },
+        {
+            "neovim/nvim-lspconfig",
+            requires = {
+                "williamboman/mason-lspconfig.nvim"
+            },
+            after = "mason.nvim",
+            config = "require('config.lsp')",
+        },
+        {
+            "mfussenegger/nvim-dap",
+            config = "require('config.dap')",
+        },
+        {
+            "mfussenegger/nvim-lint",
+            config = "require('config.lint')",
+        },
+        {
+            "mhartington/formatter.nvim",
+            config = "require('config.fmt')",
+        },
     }
 
-    use {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig",
-    }
-
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
     if packer_bootstrap then
         require("packer").sync()
     end
