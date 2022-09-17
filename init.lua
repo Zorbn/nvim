@@ -10,7 +10,7 @@ vim.opt.relativenumber = true
 vim.opt.expandtab = true
 vim.opt.mouse = "a"
 
-if vim.fn.has("win32") then
+if vim.loop.os_uname().sysname == "win32" then
     vim.opt.shell = "pwsh"
     vim.opt.shellxquote = ""
     vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
