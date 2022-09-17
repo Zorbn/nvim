@@ -34,9 +34,12 @@ local on_attach = function(client, bufnr)
     vim.opt.signcolumn = "yes"
 end
 
+vim.diagnostic.config {
+    virtual_text = false,
+}
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = false,
         signs = true,
         update_in_insert = false,
         underline = true,

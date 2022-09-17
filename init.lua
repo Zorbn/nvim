@@ -43,7 +43,20 @@ function cd_here()
     vim.cmd("cd " .. path)
 end
 
-map("n", "<leader>cd", '<cmd>lua cd_here()<cr>', { noremap = true })
+map("n", "<leader>cd", "<cmd>lua cd_here()<cr>", { noremap = true })
+
+-- Evaluate lua.
+function run_current_line()
+    line = vim.api.nvim_get_current_line()
+    vim.cmd("lua " .. line)
+end
+
+map("n", "<leader>el", "<cmd>lua run_current_line()<cr>", { noremap = true })
+
+-- Make tabs easier.
+map("n", "<leader>tt", "<cmd>tabnew<cr>", { noremap = true })
+map("n", "<leader>tn", "<cmd>tabn<cr>",   { noremap = true })
+map("n", "<leader>tp", "<cmd>tabp<cr>",   { noremap = true })
 
 -- Highlight trailing whitespace.
 vim.opt.list = true
