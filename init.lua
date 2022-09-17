@@ -3,7 +3,7 @@ require("plugins")
 
 vim.opt.background = "dark"
 vim.opt.termguicolors = true
-vim.opt.guifont = "Fira Code:h12"
+vim.opt.guifont = "DejaVu Sans Mono:h10"
 vim.opt.number = true
 vim.opt.relativenumber = true
 
